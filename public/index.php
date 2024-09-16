@@ -13,13 +13,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>MVC.PHP - Acceuil</title>
 </head>
-<body class="bg-dark text-white cursor">
-<div class="jumbotron text-center bg-purple text-white my-4 mt-5 mb-5">
+<body class="">
+<div class="jumbotron text-center my-4 mt-5 mb-5">
     <h1 class="display-4">Cours PHP <span class="text-danger">MVC.PHP</span></h1>
 </div>
 <hr class="my-4 opacity-75 container">
-
-
 
 <?php
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,32 +25,39 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 
-
 <?php
+use App\Controllers\AcceuilController;
 // Controleur FRONTAL => Router
 // Toute les requête des utilisateur passe par ce fichier
-
 require_once __DIR__ . '/../vendor/autoload.php';
-
 // Config la connexion à la Base de donnée
-
 $dbConfig = require_once __DIR__ . '/../config/database.php';
 $db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $dbConfig['username'],$dbConfig['password']);
-
 ?>
 
 
 <?php
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////// AFFICHAGE ////////////////////////////////////////////////
+/////////////////////////////////////////////////// LE ROUTING ///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 
 
-<div class="jumbotron text-center bg-purple text-white my-4 mt-5 mb-5">
-    <img src="assets/images/hq720.jpg" class="d-block w-75 container" alt="Image du film">
-    <p class="lead">En cours de dev</p>
+<div class="container">
+    <?php
+    // Mise en place du routing
+    $route = $_GET['route'];
+    if ($route === "acceuil") {
+        // appeler le controleur acceuil
+        // créer un objet acceuil controleur
+        $acceuilController = new \App\Controllers\AcceuilController();
+        $acceuilController->acceuil();
+    }else{
+        echo "Page non trouvé";
+    }
+    ?>
 </div>
+
 
 
 <?php
