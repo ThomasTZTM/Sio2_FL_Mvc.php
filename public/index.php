@@ -15,7 +15,7 @@
 </head>
 <body class="">
 <div class="jumbotron text-center my-4 mt-5 mb-5">
-    <h1 class="display-4">Cours PHP <span class="text-danger">MVC.PHP</span></h1>
+    <h1 class="display-4">Cours <span class="text-danger">MVC.PHP</span></h1>
 </div>
 <hr class="my-4 opacity-75 container">
 
@@ -41,12 +41,13 @@ $db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $db
 /////////////////////////////////////////////////// LE ROUTING ///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
-
-
 <div class="container">
+
+
+
     <?php
     // Mise en place du routing
-    $route = $_GET['route'];
+    $route = $_GET['route'] ?? 'acceuil';
     if ($route === "acceuil") {
         // appeler le controleur acceuil
         // créer un objet acceuil controleur
@@ -56,10 +57,10 @@ $db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $db
         echo "Page non trouvé";
     }
     ?>
+
+
+
 </div>
-
-
-
 <?php
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////// FIN /////////////////////////////////////////////////////
