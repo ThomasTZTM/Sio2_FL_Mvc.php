@@ -1,0 +1,11 @@
+{
+    "name": "michelint/mvc.php",
+    "type": "project",
+    "authors": [
+        {
+            "name": "michelint",
+            "email": "lemoderateurdelive@gmail.com"
+        }
+    ],
+    "require": {}
+}
