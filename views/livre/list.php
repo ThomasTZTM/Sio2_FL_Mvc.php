@@ -17,16 +17,17 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100 border-danger">
                     <div class="card-body">
-                        <span class="badge text-bg-secondary mb-3">ID : <?= $livre->getId() ?></span>
                         <h5 class="card-title"><span class="text-danger">Titre : </span><?= $livre->getTitre() ?></h5>
-                        <h5 class="card-title"><span class="text-danger">Nombre page : </span><?= $livre->getNbPage() ?></h5>
-                        <h5 class="card-title"><span class="text-danger">Auteur : </span><?= $livre->getAuteur() ?></h5>
+                        <a href="index.php?route=livre-detail&idLivre=<?= $livre->getId()?>" class="btn btn-secondary mt-3">Detail du livre</a>
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
+    <a href="index.php" class="btn btn-danger mt-3">Retour à l'accueil</a>
 </div>
+
+
 
 </body>
 </html>

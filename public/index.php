@@ -15,7 +15,7 @@
 </head>
 <body class="">
 <div class="jumbotron text-center my-4 mt-5 mb-5">
-    <h1 class="display-4">Cours <span class="text-danger">MVC.PHP</span></h1>
+    <h1 class="display-4">📕​ Cours <span class="text-danger">MVC.PHP</span></h1>
 </div>
 <hr class="my-4 opacity-75 container">
 
@@ -30,9 +30,18 @@ use App\Controllers\AcceuilController;
 // Controleur FRONTAL => Router
 // Toute les requête des utilisateur passe par ce fichier
 require_once __DIR__ . '/../vendor/autoload.php';
+
+// Chargelebt de variables d'environnement
+
+$dotEnv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
+$dotEnv->load(); //charger les variable d'environnement de .env dans $_ENV
+
 // Config la connexion à la Base de donnée
-$dbConfig = require_once __DIR__ . '/../config/database.php';
-$db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $dbConfig['username'],$dbConfig['password']);
+$db = new PDO("mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}", $_ENV['DB_USER'],$_ENV['DB_PASSWORD']);
+
+//ANCIEN
+    //$dbConfig = require_once __DIR__ . '/../config/database.php';
+    //$db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $dbConfig['username'],$dbConfig['password']);
 ?>
 
 
@@ -60,9 +69,22 @@ $db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $db
             $livreController = new \App\Controllers\LivreController($livreDAO);
             $livreController->list();
             break;
+        case 'livre-detail':
+            // Livre DAO est une dépendence de Livre Controller
+            $iddulivre = $_GET['idLivre'] ?? 'null';
+            if (empty($iddulivre)) {
+                echo "<script>alert('ID du livre non défini.');</script>";
+                echo "<script>window.location.replace('index.php?route=livre-list');</script>";
+                exit; // Assurez-vous de terminer le script après la redirection
+            }
+            $unlivreDAO = new \App\Dao\UnlivreDAO($db,$iddulivre);
+            // Injecter la dépendence $unlivreDAO dans l'objet controleur
+            $acceuilController = new \App\Controllers\DetailController($unlivreDAO,$iddulivre);
+            $acceuilController->detail($iddulivre);
+            break;
         default:
             // Erreur 404
-            echo "Erreur 404 : Page non trouvé";
+            echo "❗​ Erreur 404 : Page non trouvé";
             break;
     }
     ?>
