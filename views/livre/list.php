@@ -11,6 +11,7 @@
 ?>
 
 <div class="container my-4">
+    <h3 class="mb-3 text-secondary">Voici la liste des livres : </h3>
     <div class="row">
         <?php foreach ($livres as $livre) : ?>
             <div class="col-md-4 mb-4">
