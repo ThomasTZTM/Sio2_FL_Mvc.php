@@ -44,17 +44,23 @@ $db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $db
 <div class="container">
 
 
-
     <?php
     // Mise en place du routing
     $route = $_GET['route'] ?? 'acceuil';
-    if ($route === "acceuil") {
-        // appeler le controleur acceuil
-        // créer un objet acceuil controleur
-        $acceuilController = new \App\Controllers\AcceuilController();
-        $acceuilController->acceuil();
-    }else{
-        echo "Page non trouvé";
+    // Tester la valeur de $route
+    switch ($route) {
+        case 'acceuil':
+            $acceuilController = new \App\Controllers\AcceuilController();
+            $acceuilController->acceuil();
+            break;
+        case 'livre-list' :
+            $livreController = new \App\Controllers\LivreController($db);
+            $livreController->list();
+            break;
+        default:
+            // Erreur 404
+            echo "Page non trouvé";
+            break;
     }
     ?>
 
