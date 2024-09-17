@@ -6,15 +6,13 @@ use App\Dao\LivreDAO;
 
 class LivreController
 {
-    // Lister l'ensemble des livre
-    private \PDO $db;
-    public function __construct(\PDO $db){
-        $this->db = $db;
+    private livreDAO $livreDao;
+    public function __construct(LivreDAO $dao){
+        $this->livreDao = $dao;
     }
     public function list() {
         // Fait appel au modèle afin de récupérer les données dans la BDD
-        $livreDao = new LivreDAO($this->db);
-        $livres = $livreDao->selectAll();
+        $livres = $this->livreDao->selectAll();
         // Fait appel à la vue afin de renvoyé la page
         require_once __DIR__. '/../../views/livre/list.php';
 

@@ -54,12 +54,15 @@ $db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $db
             $acceuilController->acceuil();
             break;
         case 'livre-list' :
-            $livreController = new \App\Controllers\LivreController($db);
+            // Livre DAO est une dépendence de Livre Controller
+            $livreDAO = new \App\Dao\LivreDAO($db);
+            // Injecter la dépendence $livreDAO dans l'objet controleur
+            $livreController = new \App\Controllers\LivreController($livreDAO);
             $livreController->list();
             break;
         default:
             // Erreur 404
-            echo "Page non trouvé";
+            echo "Erreur 404 : Page non trouvé";
             break;
     }
     ?>
