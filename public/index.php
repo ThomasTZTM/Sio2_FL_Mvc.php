@@ -26,7 +26,6 @@
 ?>
 
 <?php
-use App\Controllers\AcceuilController;
 // Controleur FRONTAL => Router
 // Toute les requête des utilisateur passe par ce fichier
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -64,9 +63,9 @@ $db = new PDO("mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}", $_ENV['
             break;
         case 'livre-list' :
             // Livre DAO est une dépendence de Livre Controller
-            $livreDAO = new \App\Dao\LivreDAO($db);
+            $livreDAO = new \App\Dao\LivreDAO($db, 0);
             // Injecter la dépendence $livreDAO dans l'objet controleur
-            $livreController = new \App\Controllers\LivreController($livreDAO);
+            $livreController = new \App\Controllers\LivreController($livreDAO, 0);
             $livreController->list();
             break;
         case 'livre-detail':
@@ -77,9 +76,9 @@ $db = new PDO("mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}", $_ENV['
                 echo "<script>window.location.replace('index.php?route=livre-list');</script>";
                 exit; // Assurez-vous de terminer le script après la redirection
             }
-            $unlivreDAO = new \App\Dao\UnlivreDAO($db,$iddulivre);
+            $unlivreDAO = new \App\Dao\LivreDAO($db,$iddulivre);
             // Injecter la dépendence $unlivreDAO dans l'objet controleur
-            $acceuilController = new \App\Controllers\DetailController($unlivreDAO,$iddulivre);
+            $acceuilController = new \App\Controllers\LivreController($unlivreDAO,$iddulivre);
             $acceuilController->detail($iddulivre);
             break;
         default:
