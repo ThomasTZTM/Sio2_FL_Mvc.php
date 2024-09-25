@@ -15,7 +15,7 @@
 </head>
 <body class="">
 <div class="jumbotron text-center my-4 mt-5 mb-5">
-    <h1 class="display-4">📕​ Cours <span class="text-danger">MVC.PHP</span></h1>
+    <h1 class="display-4">📕​ Cours <span class="text-danger">MVC.PHP</span> façon ORM</h1>
 </div>
 <hr class="my-4 opacity-75 container">
 
@@ -26,21 +26,8 @@
 ?>
 
 <?php
-// Controleur FRONTAL => Router
 // Toute les requête des utilisateur passe par ce fichier
 require_once __DIR__ . '/../vendor/autoload.php';
-
-// Chargelebt de variables d'environnement
-
-$dotEnv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
-$dotEnv->load(); //charger les variable d'environnement de .env dans $_ENV
-
-// Config la connexion à la Base de donnée
-$db = new PDO("mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}", $_ENV['DB_USER'],$_ENV['DB_PASSWORD']);
-
-//ANCIEN
-    //$dbConfig = require_once __DIR__ . '/../config/database.php';
-    //$db = new PDO("mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']}", $dbConfig['username'],$dbConfig['password']);
 ?>
 
 
@@ -57,30 +44,37 @@ $db = new PDO("mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}", $_ENV['
     $route = $_GET['route'] ?? 'acceuil';
     // Tester la valeur de $route
     switch ($route) {
+
         case 'acceuil':
             $acceuilController = new \App\Controllers\AcceuilController();
             $acceuilController->acceuil();
             break;
+
         case 'livre-list' :
             // Livre DAO est une dépendence de Livre Controller
-            $livreDAO = new \App\Dao\LivreDAO($db, 0);
             // Injecter la dépendence $livreDAO dans l'objet controleur
-            $livreController = new \App\Controllers\LivreController($livreDAO, 0);
+            $livreController = new \App\Controllers\LivreController;
             $livreController->list();
             break;
+
         case 'livre-detail':
             // Livre DAO est une dépendence de Livre Controller
             $iddulivre = $_GET['idLivre'] ?? 'null';
-            if (empty($iddulivre)) {
+            $acceuilController = new \App\Controllers\LivreController;
+            if (is_numeric($iddulivre)) {
+                $acceuilController->detail($iddulivre);
+            }else{
                 echo "<script>alert('ID du livre non défini.');</script>";
                 echo "<script>window.location.replace('index.php?route=livre-list');</script>";
-                exit; // Assurez-vous de terminer le script après la redirection
+                exit;
             }
-            $unlivreDAO = new \App\Dao\LivreDAO($db,$iddulivre);
-            // Injecter la dépendence $unlivreDAO dans l'objet controleur
-            $acceuilController = new \App\Controllers\LivreController($unlivreDAO,$iddulivre);
-            $acceuilController->detail($iddulivre);
             break;
+
+        case 'livre-ajout':
+            $acceuilController = new \App\Controllers\LivreController;
+            $acceuilController->ajout();
+            break;
+
         default:
             // Erreur 404
             echo "❗​ Erreur 404 : Page non trouvé";

@@ -25,6 +25,7 @@
         <?php endforeach; ?>
     </div>
     <a href="index.php" class="btn btn-danger mt-3">Retour à l'accueil</a>
+    <a href="index.php?route=livre-ajout" class="btn btn-outline-primary mt-3">Ajouter un film à la liste</a>
 </div>
 
 
