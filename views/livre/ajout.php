@@ -147,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <button type="submit" class="btn btn-outline-danger mt-4">Créer le film</button>
                 </form>
 
-
+                <a href="index.php?route=livre-list" class="btn btn-success mt-3 text-center">Retour à la liste des films</a>
             </div>
         </div>
     </div>
