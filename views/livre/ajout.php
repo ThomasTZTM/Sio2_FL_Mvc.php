@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $entityManager = require_once __DIR__ . "/../../config/bootstrap.php";
         $entityManager->persist($nvlivre); // n'existe pas directement le insert mais le prépare juste
         $entityManager->flush();
+
     }
 }
 
@@ -60,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="mt-5 mb-5">
     <div>
         <div class="container">
+            <h1 class="text-center text-danger border border-1 border-danger">Ne marche pas encore</h1>
             <div class="w-50 mx-auto shadow p-4 my-5">
 
 

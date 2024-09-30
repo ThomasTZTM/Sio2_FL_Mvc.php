@@ -26,8 +26,8 @@
 ?>
 
 <?php
-// Toute les requête des utilisateur passe par ce fichier
-require_once __DIR__ . '/../vendor/autoload.php';
+// Recupérer l'entityManager
+$entityManager = require_once __DIR__ . '/../config/bootstrap.php';
 ?>
 
 
@@ -53,14 +53,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
         case 'livre-list' :
             // Livre DAO est une dépendence de Livre Controller
             // Injecter la dépendence $livreDAO dans l'objet controleur
-            $livreController = new \App\Controllers\LivreController;
+            $livreController = new \App\Controllers\LivreController($entityManager);
             $livreController->list();
             break;
 
         case 'livre-detail':
             // Livre DAO est une dépendence de Livre Controller
             $iddulivre = $_GET['idLivre'] ?? 'null';
-            $acceuilController = new \App\Controllers\LivreController;
+            $acceuilController = new \App\Controllers\LivreController($entityManager);
             if (is_numeric($iddulivre)) {
                 $acceuilController->detail($iddulivre);
             }else{
